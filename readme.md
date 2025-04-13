@@ -11,18 +11,23 @@ Environment:
 
 - Node.js
 - coffeescript
+- make each script executable (`chmod +x SCRIPTNAME`)
+
+Target board requirements:
+
+- custom field must exist before running scripts, "Cluster" in these examples
 
 ## Usage
 
 ```shell
 # 1. Get the issues, provide project board and query if desired. `is:open` recommended
-coffee fetch-a11y-issues.coffee --project https://github.com/orgs/github/projects/13291 --query "category:Accessibility is:open"
+coffee fetch-project-items.coffee --project https://github.com/orgs/github/projects/13291 --query "category:Accessibility is:open"
 
 # 2. Request clustering logic, which will also sort cards into clusters, through reflexive sorting that will go until clusters are about 5 issues in size
-coffee cluster-issues.coffee --input accessibility-issues.txt --batch-size 200 --temperature low [--api-key YOUR_OPENAI_API_KEY]
+coffee cluster-items.coffee --input accessibility-issues.txt [--batch-size 200] [--temperature low] [--api-key YOUR_OPENAI_API_KEY]
 
 # 3. Make the mutation (behind a confirmation that will tell you how many actions you're performing)
-coffee classify-project-issues.coffee -o github --project 13291 --field-name "Cluster" --input accessibility-clusters.json [--reset]
+coffee classify-items.coffee -o github --project 13291 --field-name "Cluster" --input accessibility-clusters.json [--reset]
 ```
 
 ## Next steps
